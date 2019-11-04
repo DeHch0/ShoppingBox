@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { dateFormatter } = require('../helpers');
 
 
 const productSchema = new mongoose.Schema({
@@ -8,28 +7,30 @@ const productSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.String,
         required: true,
     },
-    // date: {
-    //     type: mongoose.SchemaTypes.String,
-    //     required: true,
-    //     default: new Date(),
-    // },
+    date: {
+        type: mongoose.SchemaTypes.String,
+        required: true,
+        default: new Date(),
+    },
     price: {
         type: mongoose.SchemaTypes.Number,
         required: true,
     },
-    // category: {
-    //     type: mongoose.SchemaTypes.String,
-    //     required: true,
-    // },
-    // description: {
-    //     type: mongoose.SchemaTypes.String,
-    //     required: true,
-    //     minlength: 10,
-    //     maxlength: 50,
-    // },
-    // creator: {
-    //     type: mongoose.SchemaTypes.ObjectId,
-    // },
+    category: {
+        type: mongoose.SchemaTypes.String,
+        ref: 'Category',
+        required: true,
+    },
+    description: {
+        type: mongoose.SchemaTypes.String,
+        required: true,
+        minlength: 5,
+        maxlength: 50,
+    },
+    creator: {
+        type: mongoose.SchemaTypes.ObjectId, 
+        ref: 'User',
+    },
 
 });
 

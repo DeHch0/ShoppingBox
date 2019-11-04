@@ -1,7 +1,11 @@
-const product = require('./Product');
+const Product = require('./Product');
+const User = require('./User');
+const Category = require('./Category');
 
 
 module.exports = {
-    product,
+    User,
+    Product,
+    Category,
 
 }
