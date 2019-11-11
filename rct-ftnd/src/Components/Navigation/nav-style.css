@@ -1,0 +1,30 @@
+nav {
+    background: rgb(195,124,52);
+    background: linear-gradient(90deg, rgba(195,124,52,0.8908775179993873) 0%, rgba(219,177,57,1) 48%, rgba(218,151,42,1) 100%);
+    display: flex;
+    box-shadow: 2px -6px 60px -10px rgba(138,138,138,1);
+}
+nav ul {
+    display: flex;
+    margin: 0 ;
+    padding-left: 5%;
+}
+
+nav ul li {
+    list-style-type: none;
+    font-size: 18px;
+
+}
+
+li {
+    padding: 18px;
+    list-style-type: none;
+}
+nav li a {
+    text-decoration: none;    
+    color: rgb(255, 214, 109);
+}
+nav li a:hover {
+    text-decoration: none;    
+    color: rgb(163, 149, 101);
+}
