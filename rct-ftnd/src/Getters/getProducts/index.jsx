@@ -1,6 +1,6 @@
 const getService = {
-    load: function() {
-        return fetch('http://localhost:8080/products' )
+    load: function(route) {
+        return fetch(`http://localhost:8080/${route}` )
         .then(res => res.json())
     }
 };
