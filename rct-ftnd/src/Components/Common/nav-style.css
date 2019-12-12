@@ -1,30 +1,88 @@
-nav {
-    background: rgb(195,124,52);
-    background: linear-gradient(90deg, rgba(195,124,52,0.8908775179993873) 0%, rgba(219,177,57,1) 48%, rgba(218,151,42,1) 100%);
-    display: flex;
-    box-shadow: 2px -6px 60px -10px rgba(138,138,138,1);
-}
-nav ul {
-    display: flex;
-    margin: 0 ;
-    padding-left: 5%;
+@import url('https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+/* html, body {
+margin: 0 auto;  
+height: 100%;
+width:100%;
+text-align: center;
+background: white;  
+} */
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+
+
+.first-nav {
+  /* background: rgba(173, 173, 173, 0); */
+  background: rgb(218, 218, 218);
+  padding: 1%;
 }
 
-nav ul li {
-    list-style-type: none;
-    font-size: 18px;
+.first-nav ul {
+  padding: 0;
+  text-align:center;
+  margin: 0 auto;
+  font-size: 1rem
+}
+
+.first-nav ul li {
+  font-family: 'Lato', sans-serif;
+  padding:0 3%;
+  display: inline-block
+}
+
+
+
+.first-nav ul li:not(.logo) a {
+  /* text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.56); */
+  text-decoration:none;
+  color: grey;
+  /* color: rgb(97, 7, 149); */
 
 }
 
-li {
-    padding: 18px;
-    list-style-type: none;
+.logo a {
+
+  position: relative;
+  top:17px;
+  font-size: 5rem;
+  /* color:rgb(97, 7, 149); */
+  color: rgb(195, 195, 195);
+  text-decoration: none;
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;;
+    /* background-clip: text;
+    font-size: 72px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900; */
 }
-nav li a {
-    text-decoration: none;    
-    color: rgb(255, 214, 109);
+
+.logo a:hover {
+    color: rgb(56, 2, 56);
+    text-decoration: none;
 }
-nav li a:hover {
-    text-decoration: none;    
-    color: rgb(163, 149, 101);
+/* second nav design */
+
+nav .second-nav {
+  text-align: center;
+  font-family: 'Oswald', sans-serif;
+  background: linear-gradient(to bottom, rgb(238, 238, 238) 0%, rgba(252,252,252,1) 50%, rgba(245,245,245,1) 51%, rgb(211, 211, 211) 100%);
+  list-style-type: none ;
+}
+
+nav .second-nav li {
+  display:inline-block;
+  padding: 1.5rem;
+  border-left: 1px solid rgba(211, 211, 211, 0.582);
+}
+
+nav .second-nav li:hover {
+  background: rgba(255, 255, 255, 0.301);
+}
+
+nav .second-nav li a {
+  text-transform: uppercase;
+  text-decoration: none;
+  color:rgba(117, 117, 117, 0.76);
 }

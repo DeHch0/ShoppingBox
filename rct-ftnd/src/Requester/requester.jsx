@@ -1,8 +1,6 @@
 const getService = {
     load: function(route = 'products', method = 'GET', data = {}) {
         
-
-            console.log('data from requester.jsx' + JSON.stringify(data))
         return fetch(`http://localhost:8080/${route}` , {
             method,
             credentials: 'include',

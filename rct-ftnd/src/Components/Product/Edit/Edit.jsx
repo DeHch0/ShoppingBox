@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EditProductForm from './EditProductForm';
 import getService from '../../../Getters/getProducts';
+import checkCategories from './checkCategories';
 
 import {
   BrowserRouter as Router,
@@ -14,28 +15,35 @@ class EditProduct extends Component {
   state = {
     loader: true,
     product: {},
+    categories: {},
   }
 
   componentDidMount() {
-    getService.load('products').then(product => {
+    let id = window.location.pathname.toString().split('/')[2];
+    getService.load(`products/${id}`).then(product => {
       this.setState({
-        product: {
-          id: product[0]._id,
-          name: product[0].name,
-          description: product[0].description,
-          imageUrl: product[0].imageUrl,
-          price: product[0].price,
-        },
+        product
+        // loader: false,
+         })
+    })
+    .catch(e => console.log(e));
+
+    getService.load('category').then(category => {
+        let categories = checkCategories(this.state.product.category, category);
+
+      this.setState({
+        categories,
         loader: false,
          })
     })
+    .catch(e => console.log(e));
   }
 
 
 render() {
       return (
         this.state.loader ? <div>Loading</div> 
-        :<EditProductForm product={this.state.product}/>
+        :<EditProductForm product={this.state.product} categories={this.state.categories}/>
       )
 }
   

@@ -85,6 +85,15 @@ class EditProductForm extends Component {
                     required
                 />
                 <br />
+                <label htmlFor="category">Category: </label>
+                <select name="category" onChange={this.handleOnChange} required id="category">
+                <option selected='selected' value='' ></option>
+                    {/* {this.props.categories.map(category => {
+                   return  <option  value={category.name}>{category.name}</option>
+                    })} */}
+                    
+                </select>
+                <br />
                 <button type='submit'>Submit</button>
 
             </form>

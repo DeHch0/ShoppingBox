@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import getService from '../../Getters/getProducts/index'
 import ProductCard from '../ProductCard'
-import '../ProductCard/style.css';
+import './style.css';
 
 
 class ProductsList extends Component {

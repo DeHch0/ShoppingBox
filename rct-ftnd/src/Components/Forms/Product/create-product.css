@@ -1,0 +1,47 @@
+.create-form {
+    width: 50%;
+    background: white;
+    margin: 0 auto;
+}
+
+form input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+form input:focus {
+    border: 3px solid #555;
+}
+
+.promotionField {
+    display:inline-block;
+}
+
+/* button {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 10px;
+    background: gray;
+    display: inline-block;
+    border-radius: 5px;
+    transition: all 0.4s ease 0s;
+    border: none;
+    display:block;
+    margin: 0 auto;
+}
+
+button:hover {
+    background: #434343;
+    letter-spacing: 3px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+} */

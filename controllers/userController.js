@@ -1,7 +1,10 @@
 const app = require('express')();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const utils = require('../utils');
+const jwt = require('../helpers/jwt')
+const auth = require('../helpers/auth.js')
+// const auth = require('../helpers/auth.js')
+
 const models = require('../models/');
 
 app.use(cookieParser());
@@ -9,83 +12,87 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded(true));
 
 
-function getLogin(rez, res) {
-    res.render('login', { layout: 'login' });
-}
+function isAdmin(req, res) {
+    let username = req.params.token;
 
+    models.Users.findOne({username})
+    .then(data => {
+        if(data !== null) {
 
-function postLogin(req, res, next) {
-    const { username, password } = req.body;
-
-    if (username.length < 3 || username.length > 20) {
-        return res.render('login', { layout: 'login', errors: ['Username must be between 3 and 20 charachers !'] });
-    }
-
-    if (password.length < 3 || password.length > 20) {
-        return res.render('login', { layout: 'login', errors: ['Password must be between 3 and 20 charachers !'] });
-    }
-
-    models.userSchema.findOne({ username }).then(user => {
-        if (user === null) {
-            return res.render('login', { layout: 'login', errors: ['Username doesn\'t exist'] });
-        } else if (!user.matchPassword(password)) {
-            return res.render('login', { layout: 'login', errors: ['Wrong password or username!'] });
-        } else {
-            const token = utils.jwt.createToken({ id: user._id });
-            res
-                .cookie('auth_cookie', token)
-                .cookie('username', user.username)
-                .redirect('/');
-
+            if(data.admin === true) {
+                console.log('is Admin');
+                res.send({result: true}).end();
+            return
+            }
         }
-    }).catch(e => console.log(e));
+        res.send({result: false}).end();
+            return
+    })
+    .catch(err => {
+        res.send({result: err}).end();
+    })
+
 }
 
+function login(req, res) {
+    const { username, password } = req.body;
+    // console.log(username);
 
-
-
-function getRegister(req, res) {
-    res.render('register', { title: 'Register now for free', layout: 'register' });
-}
-
-function postRegister(req, res) {
-    const { username, password, repeatPassword } = req.body;
-    let amount = req.body.amount ? req.body.amount : 0;
-
-    if (password !== repeatPassword) {
-        res.render('register', {
-            layout: 'register',
-            errors: [
-                'Password and repeat password don\'t match!'
-            ]
-        });
-        return;
+    if (username == '' || password == '') {
+        res.send(`Username/Password can't be empty !`);
+        return
     }
 
-    return models.userSchema.create({ username, password, amount }).then(() => {
-        res.redirect('/login');
+
+    models.Users.findOne({ username })
+    .then((user) => !!user ? Promise.all([user, user.matchPassword(password)]) : [null, false])
+    .then(([user, match]) => {
+      if (!match) {
+        //   console.log('Invalid username or Password ! ');
+        res.status(401).send({error: 'Invalid username or password'});
+        return;
+      }
+                const token = jwt.createToken({ id: user._id });
+
+                res
+                    .cookie('auth_cookie', token, { httpOnly: false })
+                    .cookie('username', user.username)
+                    .send({success: 'Logged in successffully !'})
+                    .end();
+
+    }); 
+        
+}
+
+function register(req, res) {
+    const { username, email, password, repeatPassword } = req.body;
+    const admin = false;
+    return models.Users.create({ username, email, password, orders: [], balance: 0 , admin}).then(() => {
+        console.log('REGISTERED SUCCESSFULLY ! ****');
+        res.end();
+        return
     }).catch(err => {
         if (err.name === 'MongoError' && err.code === 11000) {
-            res.render('register', {
-                layout: 'register',
-                errors: [
-                    'Username already taken!'
-                ]
-            });
-            return;
+            console.log('Username is taken !');
+            res
+            .send('Username is taken !')
+            .end();
+            return
         }
 
         console.log(err);
+        return
     });
 
 }
 
 
 function logout(req, res) {
-
+    console.log('logout');
     res.clearCookie('auth_cookie')
         .clearCookie('username')
-        .redirect('/');
+        .send('Loggout Successfully !')
+        .end();
 
 }
 
@@ -113,10 +120,9 @@ function getProfile(req, res) {
 
 module.exports = {
     // auth,
-    getLogin,
-    postLogin,
-    getRegister,
-    postRegister,
+    isAdmin,
+    login,
+    register,
     logout,
     getProfile,
 };

@@ -22,19 +22,20 @@ function get(req, res) {
 }
 
 function create(req, res) {
-    let { name} = req.params;
-    let creator = req.cookies('username');
-    let date = helpers.dateFormatter(date.Now());
+    let { name , creator} = req.body;
+    let date = new Date();
+    date = helpers.dateFormatter.format(date);
 
-
-
-    models.User.find({ username: creator }).then(user => {
-        creator = user.id;
+    models.Users.findOne({ username: creator }).then(user => {
+        models.Category.create({ name, date, creator: user._id })
     }).catch(e => {
         console.log(e);
     })
 
-    models.Category.create({ name, date, creator,  })
+    // models.Category.create({ name, date, creator,  })
+
+
+    
 }
 
 function edit(req, params) {

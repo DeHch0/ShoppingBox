@@ -62,6 +62,8 @@ class EditProductForm extends Component {
   
   
       const { name, description, imageUrl, price } = this.state;
+
+      console.log(this.props);
       return (
           <form onSubmit={this.handleSubmit} action="">
               <label htmlFor="name">Name: </label>
@@ -104,6 +106,15 @@ class EditProductForm extends Component {
                   required
               />
               <br />
+              <label htmlFor="category">Category: </label>
+                <select name="category" onChange={this.handleOnChange} required id="category">
+                <option selected='selected' value={this.props.categories[0][0]}>{this.props.categories[0][0]}</option> */}
+                    {this.props.categories[1].map(category => {
+                   return  <option  value={category}>{category}</option>
+                    })}
+                    
+                </select>
+                <br />
               <button type='submit'>Submit</button>
   
           </form>

@@ -1,8 +1,6 @@
-import React , {Fragment} from 'react';
-import RegisterForm from '../Forms/User/Register';
-import LoginForm from '../Forms/User/Login';
-import CreateProductForm from '../Forms/Product/Create';
-
+import React , {Fragment, useState, useEffect} from 'react';
+import Bucket from '../../Bucket/Bucket';
+import './nav-style.css'
 
 import {
   BrowserRouter as Router,
@@ -12,22 +10,55 @@ import {
 } from "react-router-dom";
   import './nav-style.css'
 
-const Navigation = () => {
-    return (
+const Navigation = (isLogged) => {
 
-    <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/register">Register</Link></li>
-          {/* <button><Link to={`create/${_id}`}>Create Product</Link></button> */}
-        {/* <li><a href="#"><i className="fi-xnsuxl-house-solid"></i>Home</a></li>
-        <li><a href="#"><i className="fi-cwldxl-exclamation-mark"></i>About</a></li>
-        <li><a href="#"><i className="fi-xwluxl-label-wide"></i>Products</a></li>
-        <li><a href="#"><i className="fi-xnsuxl-phone-solid"></i>Contact</a></li>
-        <li><a href="#"><i className="fi-cnsuxl-user-circle-solid"></i>Profile</a></li> */}
-        </ul>
+    // const [auth, setAuth] = useState(isLogged.isLogged);
+
+    useEffect(() => {
+      // console.log('Nav status is ' + isLogged.bucketItems);
+    }, [isLogged])
+
+
+    return (
+    <Fragment>
+      <header>
+        {/* <Bucket /> */}
+    <nav className="first-nav">
+      <ul>
+       <li>
+          <Link to="/">HOME</Link>  
+        </li><span>|</span>
+       <li> 
+          <Link to="/about">ABOUT</Link>
+        </li>
+        <li className="logo"><a href="#">SHOPIFY</a></li>
+        <li>
+        {isLogged.isLogged ? <Link to="/create">CREATE</Link> : <Link to="/login">LOGIN</Link> }
+        </li><span>|</span>
+        <li>
+        {isLogged.isLogged ? <Link to="/logout">LOGOUT</Link> : <Link to="/register">REGISTER</Link> }
+        </li>
+      </ul>
     </nav>
+    
+    <div className="second-nav">
+      <nav>
+      <ul class="second-nav">
+        <li><Link to="/male/all">Мъже</Link></li>
+        <li><Link to="/women/all">Жени</Link></li>
+        <li><Link to="/kids/all">Деца</Link></li>
+        <li><Link to="/brands/all">Марки</Link></li>
+        <li><Link to="/offers">Промоции</Link></li>
+    <li><Link to='../../../bucket'>{isLogged.bucket}</Link></li>
+        </ul>
+      </nav>
+    </div>
+
+    
+    {/* <Header /> */}
+
+    </header>
+    </Fragment>
 
     )
 }

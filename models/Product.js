@@ -7,6 +7,14 @@ const productSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.String,
         required: true,
     },
+    // series: {
+    //     type: mongoose.SchemaTypes.String,
+    //     required: true,
+    // },
+    imageUrl: {
+        type: mongoose.SchemaTypes.String,
+        required: true,
+    },
     date: {
         type: mongoose.SchemaTypes.String,
         required: true,
@@ -17,20 +25,32 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     category: {
-        type: mongoose.SchemaTypes.String,
+        type: mongoose.SchemaTypes.ObjectId,
         ref: 'Category',
         required: true,
     },
-    description: {
+    brand: {
         type: mongoose.SchemaTypes.String,
         required: true,
-        minlength: 5,
-        maxlength: 50,
+    },
+    gender: {
+        type: mongoose.SchemaTypes.String,
+        required: true,
     },
     creator: {
         type: mongoose.SchemaTypes.ObjectId, 
         ref: 'User',
     },
+
+    // promotion: {
+    //     type: mongoose.SchemaTypes.Boolean,
+    //     default: false,
+    // },
+    // badge: {
+    //     type: mongoose.SchemaTypes.String,
+    //     default: null,
+    // }
+
 
 });
 
