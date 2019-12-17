@@ -6,6 +6,7 @@ const productSchema = new mongoose.Schema({
     name: {
         type: mongoose.SchemaTypes.String,
         required: true,
+        unique: true,
     },
     // series: {
     //     type: mongoose.SchemaTypes.String,

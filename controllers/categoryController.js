@@ -23,14 +23,73 @@ function get(req, res) {
 
 function create(req, res) {
     let { name , creator} = req.body;
+
+    // console.log(name);
+    // console.log(creator);
     let date = new Date();
     date = helpers.dateFormatter.format(date);
+    let userId = null;
 
-    models.Users.findOne({ username: creator }).then(user => {
-        models.Category.create({ name, date, creator: user._id })
-    }).catch(e => {
-        console.log(e);
+    models.Users.findOne({username: creator})
+    .then((user) => {
+        if(user == null) {
+            res.send({error: 'User not found !'});
+            return;
+        }
+
+            models.Category.findOne({name})
+            .then(category => {
+                if(category !== null) {
+                    res.send({error: 'Category already exists !'});
+                    return;
+                }
+                models.Category.create({name, date, creator: user._id})
+                .then(data => {
+                    res.send({success : 'Created Successfully !'})
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
     })
+    .catch(err => {
+        console.log(err);
+    })
+
+    // models.Category.find({name: name}).then(cat => {
+    //    if(cat !== [] || cat !== null) {
+    //        res
+    //        .send({error: 'Category already exist !'})
+    //        .end();
+    //        return;
+    //    } else {
+    //     models.Users.findOne({ username: creator }).then(user => {
+
+    //         if(user === null ) {
+    //             res.send({error: 'Invalid username !'})
+    //         }
+    
+    //         models.Category.create({ name, date, creator: user._id })
+    //         .then( data => {
+    //             res.send({succes: 'Category Created !'})
+    //         })
+    //         .catch(e => {
+    //             res.send({error: "Server Error !"});
+    //         });
+    //     }).catch(e => {
+    //         res.send({error: "Server Error !"});
+    //     })
+    //    }
+    // })
+    // .catch(e => {
+    //     res.send({error: "Server Error !"});
+    // })
+
+
 
     // models.Category.create({ name, date, creator,  })
 
@@ -44,8 +103,7 @@ function edit(req, params) {
 
     models.Category.findByIdAndUpdate(id , editParams)
     .then(data => {
-        console.log('edited' + data);
-        res.redirect(`/product/${data._id}`) // *** for edit ***
+        res.send({edited: 'Peoduct Edited Successfully !'}).end();
         
     })
 }

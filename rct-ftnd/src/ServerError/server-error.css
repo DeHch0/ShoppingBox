@@ -1,0 +1,14 @@
+body{
+    width: 100%;
+    height: 100%;
+}
+
+.four-zero-four {
+    padding: 5% 0;
+    width: 100%;
+    text-align: center;
+    font-size: 3.5rem;
+    margin: 15% 5%;
+    background: rgba(253, 0, 0, 0.774);
+    color: white;
+}

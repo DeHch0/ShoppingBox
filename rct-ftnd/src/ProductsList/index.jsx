@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import getService from '../Getters/getProducts/index'
 import ProductCard from '../ProductCard'
 // import '../ProductCard/style.css';
@@ -9,7 +9,6 @@ class ProductsList extends Component {
   // const [auth, setAuth] = useState(isLogged.isLogged);
   state = {
     posts: null,
-    isLogged: this.props.isLogged,
     isLogged: this.props.isLogged
   }
 
@@ -25,21 +24,32 @@ class ProductsList extends Component {
       console.log(err);
     })
 
-    console.log('mounting');
+    // console.log('mounting');
   }
 
   render() {
     const { posts, isLogged } = this.state;
-    let returned =  posts ? <main><div className="grid-container" key='row1'>{posts.map((post) => <ProductCard isLogged={isLogged.isLogged} {...post}/>)}</div></main> : <main><div>No Posts !</div></main>
+    // let returned =  posts ? <main key='product-list-mainClass'><div key='product-card-grid-container' className="grid-container" key='row1'>{posts.map((post) => <ProductCard isLogged={isLogged.isLogged} {...post}/>)}</div></main> : <main key='product-list-main'><div key='product-list-onError'>No Posts !</div></main>
 
     return (
 
-    <div className="container">
-      <Fragment>
+    <div key='product-list-container' className="container">
+        {
+          posts
+          ?
+           <main key='product-list-mainClass'>
+             <div key='product-card-grid-container' className="grid-container" key='row1'>
+               {posts.map((post) => <ProductCard isLogged={isLogged.isLogged} {...post}/>)}
+               </div>
+               </main>
+          : 
+          <main key='product-list-main'>
+            <div key='product-list-onError'>
+              No Posts !
+              </div>
+              </main>
+  }
 
-       {returned}
-
-      </Fragment>
       </div>
 
     )

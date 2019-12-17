@@ -13,7 +13,8 @@ main {
 }
 
 .grid-container {
-    margin-left: 27%;
+    background: white;
+    /* margin-left: 27%; */
     display: grid;
     width: 69%;
     justify-items: center;

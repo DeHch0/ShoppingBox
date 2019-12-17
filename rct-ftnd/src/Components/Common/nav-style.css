@@ -11,11 +11,15 @@ background: white;
 } */
 @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
 
+header {
+  background: linear-gradient(to bottom, rgb(245, 244, 244) 0%, rgba(252,252,252,1) 45%, rgba(245,245,245,1) 45%, rgb(211, 211, 211) 100%);
+
+}
 
 .first-nav {
   /* background: rgba(173, 173, 173, 0); */
-  background: rgb(218, 218, 218);
-  padding: 1%;
+  /* background: rgb(218, 218, 218); */
+  padding: 2% 0;
 }
 
 .first-nav ul {
@@ -36,18 +40,18 @@ background: white;
 .first-nav ul li:not(.logo) a {
   /* text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.56); */
   text-decoration:none;
-  color: grey;
-  /* color: rgb(97, 7, 149); */
+  /* color: grey; */
+  color: rgb(112, 150, 160);
 
 }
 
 .logo a {
 
   position: relative;
-  top:17px;
+  top:20px;
   font-size: 5rem;
   /* color:rgb(97, 7, 149); */
-  color: rgb(195, 195, 195);
+  color: rgb(112, 150, 160);
   text-decoration: none;
   font-family: 'Lato', sans-serif;
   font-weight: 900;;
@@ -59,7 +63,7 @@ background: white;
 }
 
 .logo a:hover {
-    color: rgb(56, 2, 56);
+    color: rgba(185, 185, 185, 0.719);
     text-decoration: none;
 }
 /* second nav design */
@@ -67,7 +71,8 @@ background: white;
 nav .second-nav {
   text-align: center;
   font-family: 'Oswald', sans-serif;
-  background: linear-gradient(to bottom, rgb(238, 238, 238) 0%, rgba(252,252,252,1) 50%, rgba(245,245,245,1) 51%, rgb(211, 211, 211) 100%);
+  background: rgba(255, 254, 254, 0.589);
+  /* background: linear-gradient(to bottom, rgb(238, 238, 238) 0%, rgba(252,252,252,1) 50%, rgba(245,245,245,1) 51%, rgb(211, 211, 211) 100%); */
   list-style-type: none ;
 }
 
@@ -84,5 +89,7 @@ nav .second-nav li:hover {
 nav .second-nav li a {
   text-transform: uppercase;
   text-decoration: none;
-  color:rgba(117, 117, 117, 0.76);
+  /* color:rgba(117, 117, 117, 0.76); */
+  color: rgb(112, 150, 160);
+  letter-spacing: 1px;;
 }

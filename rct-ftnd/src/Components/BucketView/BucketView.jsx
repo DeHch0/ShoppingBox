@@ -1,68 +1,48 @@
 import React, {useState, useEffect} from 'react';
-import ProductCart from '../../ProductCard/'
+import getService from '../../Requester/requester'
+import BucketCard from './BucketCard';
 
+const removeItem = (id) => {
+    window.sessionStorage.removeItem(id)
+}
 
-class BucketView extends React.Component {
+const BucketView = (bucket) => {
+    const [items, setItems] = useState(null);
 
-    state = {
-        items: []
-    }
-
-
-    componentDidMount() {
-        let productsArr = [];
-        let counter = 0;
+//  window.sessionStorage.removeItem(_id)
+    useEffect(() => {
         let sessionStorageItems = Object.keys(window.sessionStorage);
+            
+        getService.load('products/collection', 'POST' , sessionStorageItems)
+        .then(data => setItems(data))
+        .catch(err => console.log(err))
+    }, [])
 
-        sessionStorageItems.map(id => {
-            fetch(`http://localhost:8080/products/${id}`)
-            .then(data=> data.json())
-            .then (product => {
-                productsArr[counter] = product;
-                counter++;
-            })
-    })
-    console.log(productsArr);
-    this.setState({items: [...productsArr]})
 
-    console.log(this.state.items);
+
+    return (
+        // <div><BucketCard /> </div>
+        <table>
+        <tr>
+          <th>Brand</th>
+          <th>Name</th>
+          <th>price</th>
+          <th>Size</th>
+          <th>Quality</th>
+          <th>Remove</th>
+
+        </tr>
+        {/* <tr>
+          <td>Alfreds Futterkiste</td>
+          <td>Maria Anders</td>
+          <td>Germany</td>
+        </tr> */}
+         {items ? items.map(item => <BucketCard {...item} bucket={bucket} /> ) : <div>No Products in Bucket !</div>}
+      </table>
+
+//  items ? <main><div className="grid-container" key='row1'>{items.map(item => <ProductCart {...item} /> )}</div></main> : <div>Loading...</div>
+    )
 }
 
-    render() {
-        return (
-            <div>Hello</div>
-        )
-    }
-}
-
-// const BucketView = () => {
-//     const [bucketItems , setBucketItems] = useState()
-
-//     useEffect(() => {
-//         let productsArr = {};
-//         let counter = 0;
-//         let sessionStorageItems = Object.keys(window.sessionStorage);
-
-//         sessionStorageItems.map(id => {
-//             fetch(`http://localhost:8080/products/${id}`)
-//             .then(data=> data.json())
-//             .then (product => {
-//                 productsArr[counter] = product;
-//                 counter++;
-//             })
-//         })
-
-//         console.log(productsArr);
-
-//         setBucketItems(productsArr);
-
-//         console.log(bucketItems);
-//     }, [])
-
-
-//     return (
-//     bucketItems ? <div>{bucketItems.map((item) => <div>item.name</div>)}</div> : <div>Loading...</div>
-//     )
-// }
 
 export default BucketView

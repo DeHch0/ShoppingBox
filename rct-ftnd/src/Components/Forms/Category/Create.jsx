@@ -1,28 +1,35 @@
 import React, { Component } from 'react';
 import getService from '../../../Requester/requester';
 import Cookies from 'js-cookie';
+import {Redirect, BrowserHistory, useHistory} from 'react-router-dom';
 
 class CreateProductForm extends Component {
+
+    constructor(props) {
+        super(props)
+    }
     state = {
         name: '',
+        error: null,
+        creator: Cookies.get('username'),
+        success: null,
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.dir(this.state);
-
-        this.state.creator = Cookies.get('username');
-
-        console.log(this.state);
-        // console.log(Cookies.get('username'));
 
         getService.load('category', 'POST', this.state)
             // .then(data => data.json())
-            .then(data => console.log( data))
-            .then(() => this.props.history.push('/'))
-            // .then(res => res.json())
-            // .then(data => console.log('No Errors' + data))
-            .catch(err => console.log('Ouch Errors' + err));
+            .then(data => {
+                if(data.error) {
+                    this.setState({error: data.error});
+                    return;
+                }
+                if(data.success) {
+                   
+                }
+            })
+            .catch(err => this.setState({error: err.error}));
 
     }
 
@@ -35,9 +42,12 @@ class CreateProductForm extends Component {
     }
 
     render() {
-        const { name } = this.state;
+        const { name, error } = this.state;
         return (
             <form onSubmit={this.handleSubmit} action="">
+
+        {error ? <div>{error}</div> : null}
+
                 <label htmlFor="name">Name: </label>
                 <input
                     type='text'

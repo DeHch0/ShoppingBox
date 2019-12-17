@@ -1,11 +1,7 @@
-import React , {Fragment, useState, useEffect} from 'react';
-import Bucket from '../../Bucket/Bucket';
+import React , {Fragment, useEffect} from 'react';
 import './nav-style.css'
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link
 } from "react-router-dom";
   import './nav-style.css'
@@ -25,31 +21,35 @@ const Navigation = (isLogged) => {
         {/* <Bucket /> */}
     <nav className="first-nav">
       <ul>
-       <li>
-          <Link to="/">HOME</Link>  
-        </li><span>|</span>
-       <li> 
-          <Link to="/about">ABOUT</Link>
+       <li key='home'>
+          <Link to="/">НАЧАЛО</Link>  
         </li>
-        <li className="logo"><a href="#">SHOPIFY</a></li>
-        <li>
-        {isLogged.isLogged ? <Link to="/create">CREATE</Link> : <Link to="/login">LOGIN</Link> }
+        <span>|</span>
+       <li  key='about'> 
+          <Link to="/about">ЗА НАС</Link>
+        </li>
+        <li key='logo' className="logo"><a href="/">SHOPIFY</a></li>
+        <li  key='login'>
+        {isLogged.isLogged ? <Link to="/bucket">КОЛИЧКА({isLogged.bucket})</Link> : <Link to="/login">LOGIN</Link> }
         </li><span>|</span>
-        <li>
-        {isLogged.isLogged ? <Link to="/logout">LOGOUT</Link> : <Link to="/register">REGISTER</Link> }
+        <li  key='register'>
+        {isLogged.isLogged ? <Link to="/logout">ИЗХОД</Link> : <Link to="/register">REGISTER</Link> }
         </li>
       </ul>
     </nav>
     
     <div className="second-nav">
       <nav>
-      <ul class="second-nav">
+      <ul className="second-nav">
         <li><Link to="/male/all">Мъже</Link></li>
-        <li><Link to="/women/all">Жени</Link></li>
+        <li><Link to="/female/all">Жени</Link></li>
         <li><Link to="/kids/all">Деца</Link></li>
         <li><Link to="/brands/all">Марки</Link></li>
-        <li><Link to="/offers">Промоции</Link></li>
-    <li><Link to='../../../bucket'>{isLogged.bucket}</Link></li>
+        <li><Link to="/girls/all">Промоции</Link></li>
+    {/* <li><Link to='../../../bucket'>{isLogged.bucket}</Link></li> */}
+    {isLogged.isAdmin ? <li><Link to="/category/all">Категории</Link></li> : null }
+    {isLogged.isAdmin ? <li><Link to="/create">Създай Продукт</Link></li> : null }
+    {isLogged.isAdmin ? <li><Link to="/users/all">Потребители</Link></li> : null }
         </ul>
       </nav>
     </div>

@@ -2,18 +2,7 @@ const models = require('../models');
 const helpers = require('../helpers');
 
 function get(req, res) {
-    let searchCriteria = req.body.id;
-    console.log(req.params);
-
-    if (searchCriteria) {
-        return models.Product.findById(searchCriteria)
-            .then(data => {
-                res.send(data);
-            }).catch(e => {
-                res.send(e);
-            });
-    }
-
+ 
     models.Product.find({})
         .then(data => {
             res.send(data);
@@ -25,7 +14,7 @@ function get(req, res) {
 
 function getByCriteria(req, res) {
     const { gender } = req.params;
-    console.log('in search criteria' + gender);
+    // console.log('in search criteria' + gender);
     models.Product.find({ 'gender': gender })
         // .then(data => data.json())
         .then(data => {
@@ -36,8 +25,18 @@ function getByCriteria(req, res) {
         });
 }
 
+function getCollection(req, res) {
+
+    
+
+    models.Product.find( { _id: { $in: req.body } } )
+    .then(data => res.send(data))
+    .catch(err => res.send(err));
+
+}
+
 function getOne(req, res) {
-    console.log('getOne');
+    // console.log('getOne');
     models.Product.findById(req.params.id)
         .then(data => {
             res.send(data);
@@ -53,103 +52,76 @@ function create(req, res) {
     date = helpers.dateFormatter.format(date);
     let creatorId = null;
 
-    models.Users.findOne({ username: creator })
-        .then(data => {
-            creatorId = data._id;
-        })
-        .catch(err => {
-            res.send({ error: 'Creator not found !' }).end();
-            return;
-        })
+
+        
     models.Product.findOne({ name })
         .then((data) => {
             if (data !== null) {
                 res.send({ error: 'Product name is already in use !' }).end();
                 return;
             } else {
-
-                models.Product.create({name, brand, date, price, imageUrl, creatorId, category, gender})
+                models.Users.findOne({ username: creator })
+                .then(creator => {
+                    let creatorId = creator._id;
+                    models.Product.create({name, brand, date, price, imageUrl, creator: creatorId, category, gender})
                     .then(data => {
-                        res.send({ error: 'Everything is fine !' }).end();
-                        return;
+                        models.Category.findOneAndUpdate({_id: data.category} , {$push: {products: data._id}})
+                        .then((data) => {
+                            res.send({ success: 'Product Created Successfully !'}).end();
+                        })
+                        .catch(e => {
+                            res.send({ error: 'Error ****' + e}).end();
+                        })
                     })
                     .catch(e => {
                         console.log(e);
                         res.send({ error: 'Error is here' + e }).end();
                         return;
                     });
+                })
+                .catch(err => {
+                    res.send({ error: 'Creator not found !' }).end();
+                    return;
+                })
+               
             }
         })
         .catch(e => {
             res.send({ error: 'error' + e }).end();
         })
-
-    // models.Category.findOne({ name: category })
-    //     .then(data => {
-    //         category = data._id;
-    //     })
-    //     .catch(e => {
-    //         res.send({ error: 'Category not found !' });
-    //         return;
-    //     });
-
-    // models.Users.findOne({ username: creator }).then(user => {
-    //     models.Product.create({ name, brand, imageUrl, price, creator: user._id, date, category, gender })
-    //         .then(data => {
-    //             models.Category.updateOne({ _id: data.category }, { $push: { products: data._id } })
-    //                 .then(data => res.send({
-    //                     updated: 'Everything is fine!',
-    //                     error: '',
-    //                 }))
-    //                 .catch(err => res.send({
-    //                     error: 'Request error !'
-    //                 }));
-
-    //         })
-    //         .catch(err => {
-
-    //             if(err.code == 11000) {
-    //                 // let field = err.keyPattern;
-    //                 // console.log(field);
-    //                 let fieldDuplicate = Object.keys(err.keyValue)[0]
-    //                 res.send({error: `${fieldDuplicate} already exists !` });
-    //                 return;
-    //             }
-
-    //             res.send('Validation Error !');
-    //             // res.send({ err: err })
-    //             //  console.log(e.code);
-    //         });
-
-    // }).catch(e => {
-    //     res.send({ error: 'Invalid Credentials' })
-    // })
-
-
 }
 
 function edit(req, res) {
     let editParams = req.body;
     let id = req.params.id;
-    // console.log(editParams + '*******' + id);
 
-    models.Product.findByIdAndUpdate(id, editParams)
+         models.Product.findByIdAndUpdate(id, editParams)
         .then(data => {
-            // console.log('edited' + data);
-            res.send(data)
+            res.send({success: 'Edited Successfully'})
             res.end();
 
         })
-        .catch((e) => console.log('Error !' + e));
+        .catch((e) => {
+            if (e.name === 'MongoError' && e.code === 11000) {
+                res
+                .send({error: `Този продукт вече е създаден !`})
+                .end();
+                return
+                }
+                res.send(e);
+        });
+    
+
+   
 }
 
 function remove(req, res) {
 
-    console.log('in remove funct !')
+    // console.log('in remove funct !')
     let { id } = req.params;
 
     models.Product.findByIdAndRemove(id)
-        .then(data => { res.send(data); console.log('deleted !'); })
+        .then(data => { res.send(data); })
         .catch(err => { res.send(err) });
 }
 
@@ -162,5 +134,5 @@ module.exports = {
     create,
     edit,
     remove,
-
+    getCollection
 }

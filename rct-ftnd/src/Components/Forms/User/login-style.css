@@ -1,9 +1,4 @@
-main{
-    width: 100%;
-    background: rgb(255,255,255);
-  /* background: linear-gradient(1deg, rgb(206, 206, 206) 100%, rgb(165, 165, 165) 0%); */
-  background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
-  }
+
   
   .wrapper {
     width: 100%;

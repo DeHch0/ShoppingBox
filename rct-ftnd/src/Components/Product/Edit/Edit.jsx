@@ -1,52 +1,42 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import EditProductForm from './EditProductForm';
 import getService from '../../../Getters/getProducts';
 import checkCategories from './checkCategories';
+import {useHistory} from 'react-router-dom';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 
-class EditProduct extends Component {
 
-  state = {
-    loader: true,
-    product: {},
-    categories: {},
-  }
+const EditProduct = () => {
+  const history = useHistory();
+  const [loader, setLoader] = useState(true);
+  const [products, setProducts] = useState({});
+  const [categories, setCategories] = useState({});
 
-  componentDidMount() {
+
+  useEffect(() => {
     let id = window.location.pathname.toString().split('/')[2];
     getService.load(`products/${id}`).then(product => {
-      this.setState({
-        product
-        // loader: false,
-         })
+      setProducts(product);
+
+
+         getService.load('category').then(category => {
+          let categorie = checkCategories(product.category, category);
+        setCategories(categorie);
+        setLoader(false);
+      })
+      .catch(e => console.log(e));
+
     })
     .catch(e => console.log(e));
-
-    getService.load('category').then(category => {
-        let categories = checkCategories(this.state.product.category, category);
-
-      this.setState({
-        categories,
-        loader: false,
-         })
-    })
-    .catch(e => console.log(e));
-  }
+  })
 
 
-render() {
-      return (
-        this.state.loader ? <div>Loading</div> 
-        :<EditProductForm product={this.state.product} categories={this.state.categories}/>
-      )
+  return (
+    loader ? <div>Loading</div> 
+    :<EditProductForm product={products} history={history} categories={categories}/>
+  )
+
 }
-  
-  }
+
 
 export default EditProduct;

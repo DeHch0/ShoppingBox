@@ -12,6 +12,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded(true));
 
 
+
 function isAdmin(req, res) {
     let username = req.params.token;
 
@@ -20,11 +21,11 @@ function isAdmin(req, res) {
         if(data !== null) {
 
             if(data.admin === true) {
-                console.log('is Admin');
                 res.send({result: true}).end();
             return
             }
         }
+        console.log('not Admin');
         res.send({result: false}).end();
             return
     })
@@ -36,20 +37,12 @@ function isAdmin(req, res) {
 
 function login(req, res) {
     const { username, password } = req.body;
-    // console.log(username);
-
-    if (username == '' || password == '') {
-        res.send(`Username/Password can't be empty !`);
-        return
-    }
-
 
     models.Users.findOne({ username })
     .then((user) => !!user ? Promise.all([user, user.matchPassword(password)]) : [null, false])
     .then(([user, match]) => {
       if (!match) {
-        //   console.log('Invalid username or Password ! ');
-        res.status(401).send({error: 'Invalid username or password'});
+        res.status(401).send('Invalid username or password');
         return;
       }
                 const token = jwt.createToken({ id: user._id });
@@ -59,8 +52,10 @@ function login(req, res) {
                     .cookie('username', user.username)
                     .send({success: 'Logged in successffully !'})
                     .end();
-
-    }); 
+      
+    }).catch(err => {
+        res.send(err).end();
+    })
         
 }
 
@@ -72,10 +67,11 @@ function register(req, res) {
         res.end();
         return
     }).catch(err => {
+        let field = Object.keys(err.keyValue)[0];
         if (err.name === 'MongoError' && err.code === 11000) {
-            console.log('Username is taken !');
+            console.log(`${field} is taken !`);
             res
-            .send('Username is taken !')
+            .send({error:`${field} is taken !`})
             .end();
             return
         }
@@ -96,26 +92,52 @@ function logout(req, res) {
 
 }
 
-function getProfile(req, res) {
+function getAll(req, res) {
+    models.Users.find({})
+    .then(users => {
+        res.send(users).end()
+    })
+    .catch(e => {
+        res.send({error: 'Error due getting all users'}).end();
+    })
+}
+
+function getOne(req, res) {
     let { id } = req.params;
 
-    models.userSchema.findById(id).populate('expences').then(profile => {
-
-        let exp = profile.expences;
-        let totalExpences = 0;
-        exp.forEach(element => {
-            totalExpences += element.total;
-        });
-
-        let available = profile.amount - totalExpences;
-
-        console.log(available)
-
-        res.render('profile', { layout: 'profile', profile, available })
-    }).catch(e => {
-        console.log('error due profile get');
-        console.log(e);
+    models.Users.findById(id).then(profile => {
+        res.send(profile).end();
+      
+    }).catch(err => {
+        res.send({error: err})
     })
+}
+
+function remove(req, res) {
+    let {id} = req.params;
+
+    models.Users.findByIdAndRemove(id)
+    .then(data => {
+        res.send({succes: `User ${data.username} was deleted successfully ! `})
+    })
+    .catch(err => {
+        res.send({error: err}).end();
+    })
+}
+
+function edit(req, res) {
+    console.log('in edit func *****');
+    let editObj = {
+        username: req.body.username,
+        email: req.body.email,
+        admin: req.body.admin,
+    };
+
+    console.log(editObj);
+
+    models.Users.findByIdAndUpdate(req.body.userId, editObj)
+    .then(data => res.send({success: `User ${req.body.username} edited successfully !`}))
+    .catch(err => {console.log('edited')})
 }
 
 module.exports = {
@@ -124,5 +146,8 @@ module.exports = {
     login,
     register,
     logout,
-    getProfile,
+    getOne,
+    getAll,
+    remove,
+    edit
 };

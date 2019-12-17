@@ -23,6 +23,28 @@ form input:focus {
     display:inline-block;
 }
 
+.error-create {
+    margin: 30px auto;
+    width:80%;
+    background: rgba(209, 37, 37, 0.671);
+    padding: 20px 0;
+    text-align: center;
+    color:white;
+    font-weight: bold ;
+    border-radius: 8px;
+}
+
+.successfully-create {
+    margin: 30px auto;
+    width:80%;
+    background: rgba(45, 163, 34, 0.767);
+    padding: 20px 0;
+    text-align: center;
+    color:white;
+    font-weight: bold ;
+    border-radius: 8px;
+}
+
 /* button {
     color: #fff;
     text-decoration: none;

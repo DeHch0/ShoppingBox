@@ -57,3 +57,33 @@
     background: none;
     border: 1px solid grey;
 }
+
+.btn-edit {
+    margin: 10px 5px;
+    background:rgba(255, 233, 33, 0.698);
+    border: none;
+    padding: 10px 5%;
+    /* padding: 7px; */
+    border: 1px solid none;
+    color: white;
+} 
+
+.btn-edit a {
+    text-decoration: none;
+    color: black;
+}
+
+.btn-remove {
+    margin: 10px 5px;
+    background:rgba(255, 33, 33, 0.698);
+    border: none;
+    padding: 10px 5%;
+    /* padding: 7px; */
+    border: 1px solid none;
+    color: white;
+} 
+
+.btn-remove a {
+    text-decoration: none;
+    color: black;
+}

@@ -1,8 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-*  {
+/* *  {
     margin: 0 auto;
     padding: 0;
     text-align: center;
-}
+} */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
 

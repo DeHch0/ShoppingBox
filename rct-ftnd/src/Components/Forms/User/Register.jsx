@@ -6,6 +6,7 @@ class RegisterForm extends Component {
         username: '',
         email: '',
         password: '',
+        error: null
     }
 
     handleRegister = (event) => {
@@ -13,12 +14,18 @@ class RegisterForm extends Component {
         console.dir(this.state);
 
         getService.load('user/register' , 'POST' , this.state)
-        .then(() =>  {
-            debugger; 
-            this.props.history.push('/login');
+        .then((data) =>  {
+            if(data.error) {
+                this.setState({error: data.error})
+                return;
+            }
+            console.log('**** Logged ****');
         })
         // .then(() =>  this.props.history.push('/login'))
-        .catch(err=> {console.log('Registration Error !' + err)})
+        .catch(err=> {
+            console.log(err);
+            this.setState({error: err.error})
+    })
     }
 
     handleOnChange = ({target}) => {
@@ -30,11 +37,13 @@ class RegisterForm extends Component {
     }
 
     render() {
-        const { email, username, password } = this.state;
+        const { email, username, password,error } = this.state;
         return (
 
             <main>
             <div class="wrapper">
+
+                {error ? <div>{error}</div> : null}
                 <div class="login-form">
 
                     <h2>Register</h2>

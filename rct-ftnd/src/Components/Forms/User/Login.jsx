@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import getService from '../../../Requester/requester';
 // import { Redirect } from 'react-router';
 import './login-style.css';
 import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom'
 
 
 class LoginForm extends Component {
@@ -11,7 +11,7 @@ class LoginForm extends Component {
         password: '',
         error: null,
         setLogin: this.props.setIsLogged,
-        isLogged: this.props.isLogged
+        isLogged: this.props.isLogged,
     }
 
     handleLogin = (event) => {
@@ -20,37 +20,29 @@ class LoginForm extends Component {
         let usernameInput = this.state.username;
         let passwordInput = this.state.password;
 
-        // if (passwordInput.length < 6 || passwordInput > 20) {
+        // if (passwordInput.length < 6 || passwordInput..length > 20) {
         //     this.setState({ error: 'Password must be betwen 6 and 20 chars !' });
         //     setTimeout(() => {
         //         this.setState({ error: null })
         //     }, 4000)
         //     return;
         // }
-        if (usernameInput.length < 5 || usernameInput >= 12) {
-            this.setState({ error: 'Username must be betwen 5 and 12 chars !' });
-            setTimeout(() => {
-                this.setState({ error: null })
-            }, 4000)
-            return;
-        } else {
-                    this.props.login(this.state)
-            .then((data) => <Redirect to='/' />)
-            .catch(err => {
-                this.setState({ error: err });
-                setTimeout(() => {
-                    this.setState({ error: null })
-                }, 4000)
+        // if (usernameInput.length < 5 || usernameInput.length >= 12) {
 
-            });
-        }
+        //     this.setState({ error: 'Username must be betwen 5 and 12 chars !' });
+        //     return;
+        // }
 
+        this.props.login({username: usernameInput, password: passwordInput})
+        .then(data => console.log(data))
+        .catch(err => {this.setState({error: err})})
 
     }
 
 
 
     handleOnChange = ({ target }) => {
+        console.log(this.props);
         const { value, id } = target;
 
         this.setState({
@@ -68,6 +60,8 @@ class LoginForm extends Component {
                     {error ?
                         <div className='errorNotification'>{error}</div>
                         : null}
+
+
                     <div class="login-form">
 
                         <h2>Login</h2>

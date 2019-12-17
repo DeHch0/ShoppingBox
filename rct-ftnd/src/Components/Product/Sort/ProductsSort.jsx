@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import {withRouter} from 'react-router-dom';
-import { spawn } from 'child_process';
 import ProductCard from '../../../ProductCard'
-import './sort.css';
-// import getService from '../../../Getters/getProducts'
 
 const ProductsSort = () => {
 
     let path = window.location.pathname;
 
     let splittedPath = path.split('/');
-    // let currPath = splittedPath[1];
     let searchCategory = splittedPath[1];
     console.log(splittedPath[1]);
 
-    switch(searchCategory) {
-        case 'women': searchCategory = 'female';break;
-        case 'kids': searchCategory = 'boys';break;
-
-        default: searchCategory = 'male';break;
-    }
+    // switch(searchCategory) {
+    //     case 'women': searchCategory = 'female';break;
+    //     case 'boys': searchCategory = 'boys';break;
+    //     case 'girls': searchCategory = 'girls';break;
+    //     case 'kids': searchCategory = 'kids';break;
+    //     default: searchCategory= 'male';break;
+    // }
 
     const [products, setProducts] = useState(null);
     
     useEffect(() => {
         'mounting';
         fetch(`http://localhost:8080/products/gender/${searchCategory}`)
-        // getService.load(`get/${searchCriteria}`)
         .then(data => data.json())
         .then((data) => {
             console.log(data);
@@ -35,7 +30,7 @@ const ProductsSort = () => {
         .catch((err) => {
             console.log(' *** OPSSS Error in Sorting JSX =( ***'+ err);
         });
-    } , []);
+    }, []);
 
     return (
 

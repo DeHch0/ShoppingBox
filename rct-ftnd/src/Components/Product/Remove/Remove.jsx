@@ -1,36 +1,58 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import getService from '../../../Requester/requester';
+import {useHistory} from 'react-router-dom';
 
-class Remove extends Component {
-    state = {
-      posts: null
-    }
+
+
+const Remove = () => {
+  const history = useHistory();
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    console.log(this.props.match.params)
+    getService.load(`products/${this.props.match.params.id}`, 'DELETE').then(posts => {
+      history.push('/');
+    })
+  });
+
+  return (
+    null
+  )
+}
+
+
+// class Remove extends Component {
+//     state = {
+//       posts: null,
+//       history: useHistory(),
+//     }
   
-    componentDidMount() {
-        console.log(this.props.match.params)
-      getService.load(`products/${this.props.match.params.id}`, 'DELETE').then(posts => {
-          console.log('Deleted !');
-        this.setState({ posts })
-      })
+//     componentDidMount() {
+//         console.log(this.props.match.params)
+//       getService.load(`products/${this.props.match.params.id}`, 'DELETE').then(posts => {
+//           console.log('Deleted !');
+//           this.state.history.push('/');
+//         this.setState({ posts })
+//       })
   
-      console.log('mounting');
-    }
+//       console.log('mounting');
+//     }
   
-    render() {
-      const { posts } = this.state;
-    let returned =  posts ? <div className="row" key='row1'>asd</div> : <div>No Posts !</div>
+//     render() {
+//       const { posts } = this.state;
+//     let returned =  posts ? <div className="row" key='row1'>asd</div> : <div>No Posts !</div>
   
-      return (
+//       return (
   
-      <div className="container">
+//       <div className="container">
       
-         {returned}
-        </div>
+//          {returned}
+//         </div>
   
-      )
+//       )
     
-    }
+//     }
   
-  }
+//   }
 
 export default Remove;

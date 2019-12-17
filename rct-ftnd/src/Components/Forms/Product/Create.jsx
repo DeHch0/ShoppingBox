@@ -29,7 +29,11 @@ class CreateProductForm extends Component {
 
         getService.load('products', 'POST', this.state)
             .then(data => {
-                this.setState({error: data.error})
+                if(data.error) {
+                    this.setState({error: data.error})
+                    return;
+                }
+                this.props.history.push('/');
             })
             // .then(() => this.props.history.push('/'))
             // .then(data => console.log('No Errors' + data))
@@ -39,7 +43,7 @@ class CreateProductForm extends Component {
 
     handleOnChange = ({ target }) => {
         const { value, id } = target;
-
+        console.log(this.props);
         this.setState({
             [id]: value,
         })
@@ -50,7 +54,7 @@ class CreateProductForm extends Component {
         return (
             <div className="create-form">
             {error !== '' ?  
-          <div>{error}</div> :null }
+          <div className='error-create'>{error}</div> :null }
           <form onSubmit={this.handleSubmit} action="">
               <label htmlFor="name">Name: </label>
               <input
@@ -92,7 +96,9 @@ class CreateProductForm extends Component {
                   required
               />
               <br />
+              
               <label htmlFor="category">Category: </label>
+              {this.props.categories ?
               <select name="category" onChange={this.handleOnChange} required id="category">
               <option selected='selected' value='' ></option>
                   {this.props.categories.map(category => {
@@ -100,6 +106,7 @@ class CreateProductForm extends Component {
                   })}
                   
               </select>
+              : null }
               <br />
               <label htmlFor="gender">For(Gender): </label>
               <select name="gender" onChange={this.handleOnChange} required id="gender">

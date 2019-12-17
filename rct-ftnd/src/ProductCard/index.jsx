@@ -1,51 +1,49 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import './style.css';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  BrowserRouter,
   Link
 } from "react-router-dom";
 
 class ProductCard extends Component {
 
-  routeChange(event) {
-    console.log('in' + event.target);
-  }
+  // routeChange(event) {
+  //   console.log('in' + event.target);
+  // }
 
 
   render() {
     const { _id, name, price, imageUrl, brand, isLogged } = this.props;
-    console.log('Am i Logged ? ' + this.props);
+    // console.log('Am i Logged ? ' + this.props);
     return (
-
-      <div className="card">
-        <div className="message">
+      <Link key='product-card-link-view}' to={`../view/${_id}`}>
+      <div className="card" key='product-card-card'>
+        {/* <div className="message">
           BestSeller
-          </div>
-        <div className="img">
-          <img src={imageUrl} alt="" />
+          </div> */}
+        <div className="img" key='product-card-img'>
+          <img key='product-card-img-url' src={imageUrl} alt="" />
         </div>
-        <div className="info">
-          <div className="brand">
-            <span><Link to={`view/${_id}`}>{brand}</Link></span>
+        <div className="info" key='product-card-info'>
+          <div className="brand" key='product-card-brand'>
+            <span key='product-card-span-brand'>{brand}</span>
           </div>
-          <div className="name">
-            <span>{name}</span>
+          <div className="name" key='product-card-name'>
+            <span key='product-card-span-name'>{name}</span>
           </div>
 
-          <div className="size">
+          {/* <div className="size">
             from <span>S</span> to <span>XL</span>
-          </div>
+          </div> */}
 
-          <div className="price">
-            {price}$
+          <div className="price" key='product-card-price'>
+            {price} лв.
           </div>
 
           {/* {isLogged? <button>Logged !</button> :  <button>Not Logged !</button>} */}
         </div>
       </div>
-
+      </Link>
 
       // <div className="item">
       //   <div className="card">
