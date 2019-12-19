@@ -1,68 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React-project
+ 
+## Description 
 
-## Available Scripts
+ React-project Shopify is a single page application (SPA) that let you to buy products like clothes,shoest and etc.
+ 
+ ## Build with
+ 
+  * [React](https://reactjs.org/) -A JavaScript library for building user interfaces
+  * [MongoDb](https://mongodb.com) - MongoDB is a document database, which means it stores data in JSON-like documents.
+  * [mongoose](https://mongoosejs.com/) - elegant mongodb object modeling for node.js.
+  * [ExpressJS](https://expressjs.com/) - Express is a minimal and flexible Node.js web application framework.
+  * [NodeJS](https://nodejs.org/en/) - Node.js is an open-source, cross-platform, JavaScript runtime environment that executes JavaScript code outside of a browser.
 
-In the project directory, you can run:
+## How to set up the project?
 
-### `npm start`
+   1. First you have to start MongoD typing `mongod` in terminal. 
+   If ypu don\`t have it, please install it [MongoDb](https://mongodb.com) .
+   2. Write `npm install` in terminal for both directories - _client-side_ and _REST API_. 
+   
+   ###### bcrypt
+   If you hit a problem with bcrypt while installing dependencies, try `npm install bcrypt@3.0.6`.
+   
+   3. In  _client-side_ write `npm start` in terminal. It will run the project at http://localhost:3000 .
+   4. in _REST API_ directory write `node index` in terminal. It will run the server at http://localhost:8080 .
+   
+## Features
+  * Anonymouse users
+      * Login/Register
+      * View home page
+	  * View products by gender.
+	  * View any product without option to add it in the cart.
+  
+  * Logged in users
+      * View all products.
+      * Can put products in cart.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  * Admin part
+	  * Create Product
+	  * Edit Product
+	  * Remove Product
+	  * Create Category
+	  * Delete Category
+	  * Edit User
+	  * Remove User
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
