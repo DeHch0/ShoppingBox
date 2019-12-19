@@ -1,0 +1,89 @@
+.details {
+    display:flex;
+    margin: 0 20%;
+}
+
+.detail-img {
+    width:30%;
+    height: 60%;;
+}
+
+.detail-img img {
+    width:100%;
+    height: 100%;
+}
+
+.detail-info {
+    width: 30%;;
+    font-size: 1.25rem;;
+}
+
+.brand {
+    font-size: 1rem;
+    text-align: left;
+    color: grey;
+    margin: 7% 0 0 0;
+}
+
+.model {
+    color: grey;
+    text-align: left;
+    margin: 0 0 7% 0;
+    font-size: 2.25rem;
+}
+
+.price {
+    text-align: left;
+    color: #988b8b;
+    font-weight: bold;
+}
+
+.size ul {
+    display: flex;
+    list-style-type: none;
+
+}
+
+.size ul li {
+    margin: 5px;
+    color: black;
+}
+
+.size ul li button {
+    width: 2rem;
+    height: 2rem;
+    color:black;
+    /* padding: 7px; */
+    background: none;
+    border: 1px solid grey;
+}
+
+.btn-edit {
+    margin: 10px 5px;
+    background:rgba(255, 233, 33, 0.698);
+    border: none;
+    padding: 10px 5%;
+    /* padding: 7px; */
+    border: 1px solid none;
+    color: white;
+} 
+
+.btn-edit a {
+    text-decoration: none;
+    color: black;
+}
+
+.btn-remove {
+    margin: 10px 5px;
+    background:rgba(255, 33, 33, 0.698);
+    border: none;
+    padding: 10px 5%;
+    /* padding: 7px; */
+    border: 1px solid none;
+    color: white;
+} 
+
+.btn-remove a {
+    text-decoration: none;
+    color: black;
+}
